@@ -282,7 +282,9 @@ resolve(downloadURL);
 
           
           <p>Regular price</p>
-          <span className='text-xs'>($ / month) </span>
+          {formData.type === 'rent' && (
+                  <span className='text-xs'>($ / month)</span>
+                )}
           </div>
 
         </div>
@@ -303,7 +305,9 @@ resolve(downloadURL);
           
           
           <p>Discounted price </p>
-          <span className='text-xs'>($ / month) </span>
+          {formData.type === 'rent' && (
+                    <span className='text-xs'>($ / month)</span>
+                  )}
 
         </div>
         </div>
