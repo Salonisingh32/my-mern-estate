@@ -30,14 +30,14 @@ app.listen(3000, () => {
 app.use('/api/user',userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
-// app.use((req, res, next) => {
-//     if (req.path.endsWith('.mjs')) {
-//       res.type('application/javascript');
-//     } else if (req.path.endsWith('.jsx')) {
-//       res.type('text/javascript');
-//     }
-//     next();
-//   });
+app.use((req, res, next) => {
+    if (req.path.endsWith('.mjs')) {
+      res.type('application/javascript');
+    } else if (req.path.endsWith('.jsx')) {
+      res.type('text/javascript');
+    }
+    next();
+  });
 
 app.use(express.static(path.join(_dirname, '/client/dist')));
 
@@ -47,7 +47,7 @@ app.get('*', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-    console.log(err)
+    console.error(err)
     const statusCode = err.statusCode || 500;
     const message = err.message || 'Internal Server Error';
     return res.status(statusCode).json({
