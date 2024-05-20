@@ -8,10 +8,9 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 dotenv.config();
 mongoose
-.connect(process.env.MONGO,{
-    serverSelectionTimeoutMS:30000,
-    socketTimeoutMS:45000
-})
+.connect(process.env.MONGO)
+   
+
 .then( () =>{
     console.log('connected to MongoDB!');
 })
@@ -30,6 +29,14 @@ app.listen(3000, () => {
 app.use('/api/user',userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
+app.use((req, res, next) => {
+    if (req.path.endsWith('.mjs')) {
+      res.type('application/javascript');
+    } else if (req.path.endsWith('.jsx')) {
+      res.type('text/javascript');
+    }
+    next();
+  });
 
 app.use(express.static(path.join(_dirname, '/client/dist')));
 
